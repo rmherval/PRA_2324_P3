@@ -46,15 +46,15 @@ friend std::ostream& operator<<(std::ostream &out, const HashTable<V> &th) {
         out << "Cubeta " << varmax << std::endl;
         out << "List => [";
 
-        // Itera sobre la lista enlazada en la posición varmax
+        // Itero sobre la lista enlazada en la posición varmax
         for (int i = 0; i < th.table[varmax].size(); ++i) {
-            // Utiliza el método get de ListLinked para obtener el TableEntry
+            // Utilizo el método get de ListLinked para obtener el TableEntry
             TableEntry<V> entry = th.table[varmax].get(i);
 
-            // Imprime la clave y el valor
+
             out << "('" << entry.key << "=>" << entry.value << "') ";
 
-            // Agrega una coma y espacio si no es el último elemento
+            // Agrego una coma y espacio si no es el último elemento
             if (i < th.table[varmax].size() - 1) {
                 out << ", ";
             }
@@ -79,7 +79,7 @@ friend std::ostream& operator<<(std::ostream &out, const HashTable<V> &th) {
 
 
 		TableEntry<V> new_entry(key, value);
-		table[pos].append(new_entry);
+		table[pos].prepend(new_entry);
 		n++;
         }
 
@@ -99,28 +99,28 @@ friend std::ostream& operator<<(std::ostream &out, const HashTable<V> &th) {
 
 
 V remove(std::string key) override {
-    int buscado = h(key);  // Calcula la posición en la tabla hash para la clave dada.
-    TableEntry<V> new_entry(key);  // Crea un nuevo objeto TableEntry con la clave dada.
+    int buscado = h(key);
+    TableEntry<V> new_entry(key);  // Creo un nuevo objeto TableEntry con la clave dada.
 
-    // Verifica si la tabla en la posición 'buscado' contiene la clave.
+    // Verifico si la tabla en esa pos contiene la clave
     if (table[buscado].search(new_entry) != -1) {
-        // Obtiene el índice de la clave en la lista enlazada.
+        // Obtengo el índice de la clave en la lista enlazada
         int index = table[buscado].search(new_entry);
 
-        // Obtiene el valor asociado a la clave en la posición 'index' de la lista.
+        // Obtengo el valor asociado a la clave en la posición 'index' de la lista
         V valueToRemove = table[buscado].get(index).value;
 
-        // Elimina el elemento de la lista enlazada en la posición 'index'.
+        // Elimino el elemento de la lista enlazada en la posición 'index'
         table[buscado].remove(index);
 
-        // Decrementa el contador de elementos en la tabla hash.
+
         n--;
 
-        // Devuelve el valor eliminado.
+        // Devuelvo el valor eliminado.
         return valueToRemove;
     }
 
-    // Si la clave no se encuentra, lanza una excepción.
+    // Si la clave no se encuentra, lanzo una excepción
     throw std::runtime_error("la clave no existe");
 }
 
